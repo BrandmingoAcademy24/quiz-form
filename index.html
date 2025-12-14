@@ -957,6 +957,27 @@
                 padding: 25px;
             }
         }
+/* Thank You Message */
+.thank-you-card {
+  background: linear-gradient(135deg, #fff7ea, #fff);
+  border-left: 6px solid var(--highlight);
+  border-radius: 18px;
+  padding: 28px;
+  margin: 30px auto;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.thank-you-card h3 {
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--primary);
+}
+
+.thank-you-card p {
+  font-size: 15.5px;
+  color: #444;
+}
 
     </style>
 </head>
@@ -1029,6 +1050,16 @@
 <!--         <h1>Weekly Quiz Portal</h1> -->
         <div id="weeksContainer"></div>
     </div>
+<!-- THANK YOU MESSAGE -->
+<div class="container">
+  <div id="thankYouBox" class="thank-you-card" style="display:none;">
+    <h3>🎉 Thank You for Participating!</h3>
+    <p>
+      Your quiz has been submitted successfully.  
+      You can now review your answers below.
+    </p>
+  </div>
+</div>
 
     <div id="quizModal" class="modal">
         <div class="modal-content">
@@ -1337,24 +1368,54 @@
             });
         }
 
-        function submitQuiz() {
-            const answers = [];
-            currentQuiz.questions.forEach((q, index) => {
-                const selected = document.querySelector(`input[name="question-${index}"]:checked`);
-                answers.push(selected ? parseInt(selected.value) : -1);
-            });
+//         function submitQuiz() {
+//             const answers = [];
+//             currentQuiz.questions.forEach((q, index) => {
+//                 const selected = document.querySelector(`input[name="question-${index}"]:checked`);
+//                 answers.push(selected ? parseInt(selected.value) : -1);
+//             });
             
-            quizAttempts[currentQuiz.quizId] = {
-                userAnswers: answers,
-                correctAnswers: currentQuiz.questions.map(q => q.correctIndex),
-                questions: currentQuiz.questions
-            };
+//             quizAttempts[currentQuiz.quizId] = {
+//                 userAnswers: answers,
+//                 correctAnswers: currentQuiz.questions.map(q => q.correctIndex),
+//                 questions: currentQuiz.questions
+//             };
             
-            document.getElementById('quizModal').classList.remove('active');
+//             document.getElementById('quizModal').classList.remove('active');
             
-            const seeAnswersBtn = document.getElementById(`seeAnswers-${currentQuiz.quizId}`);
-            seeAnswersBtn.classList.add('visible');
-        }
+//             const seeAnswersBtn = document.getElementById(`seeAnswers-${currentQuiz.quizId}`);
+//             seeAnswersBtn.classList.add('visible');
+//         }
+      
+      function submitQuiz() {
+    const answers = [];
+
+    currentQuiz.questions.forEach((q, index) => {
+        const selected = document.querySelector(`input[name="question-${index}"]:checked`);
+        answers.push(selected ? parseInt(selected.value) : -1);
+    });
+
+    quizAttempts[currentQuiz.quizId] = {
+        userAnswers: answers,
+        correctAnswers: currentQuiz.questions.map(q => q.correctIndex),
+        questions: currentQuiz.questions
+    };
+
+    // Close modal
+    document.getElementById('quizModal').classList.remove('active');
+
+    // Show Thank You message
+    const thankYouBox = document.getElementById('thankYouBox');
+    thankYouBox.style.display = 'block';
+
+    // Scroll to Thank You message smoothly
+    thankYouBox.scrollIntoView({ behavior: "smooth" });
+
+    // Enable "See Answers" button
+    const seeAnswersBtn = document.getElementById(`seeAnswers-${currentQuiz.quizId}`);
+    seeAnswersBtn.classList.add('visible');
+}
+
 
         function toggleAnswers(quizId) {
             const answersSection = document.getElementById(`answers-${quizId}`);
