@@ -1,236 +1,1400 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>JYP Quiz</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jagran Youth Parliament 2025 - Quiz Portal</title>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+      :root {
+  --primary: #3b3c3d;
+  --accent: #f9b900;
+  --highlight: #e46428;
+  --dark: #3b3c3d;
+  --white: #fcfcfc;
+  --light-gray: #f5f6fa;
+}
+      
+            
+      /* === Sticky Footer Fix === */
 
-<style>
-body{
-    font-family: Inter, system-ui, sans-serif;
-    background:#f6f7fb;
-    margin:0;
-    padding:20px;
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--white);
+      color: var(--primary);
+      overflow-x: hidden;
+      height: 100%;
+    }
+      .page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
-.container{
-    max-width:1100px;
-    margin:auto;
+
+.main-content {
+  flex: 1;
 }
-.card{
-    background:#fff;
-    border-radius:18px;
-    padding:24px;
-    margin-bottom:20px;
-    box-shadow:0 12px 30px rgba(0,0,0,0.08);
+
+ /* Navigation Styling */
+    /* Container setup */
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
 }
-h2,h3{margin-top:0;color:#222}
-button{border:none;cursor:pointer}
-.week-btn{
-    background:#ff7a00;
-    color:#fff;
-    padding:14px 20px;
-    border-radius:14px;
-    margin:8px;
+
+/* Desktop Navbar Menu */
+.navbar-menu {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  justify-content: center;
 }
-.quiz-btn{
-    background:#fff;
-    border:2px solid #ff7a00;
-    color:#ff7a00;
-    padding:14px 20px;
-    border-radius:14px;
-    margin:8px;
+
+/* Horizontal Menu for Desktop */
+.navbar-nav {
+  display: flex;
+  flex-direction: row;   /* fixes vertical stacking */
+  align-items: center;
+  gap: 24px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
-.popup{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,0.6);
-    display:none;
-    align-items:center;
-    justify-content:center;
-    z-index:10;
+
+/* Fix links spacing and style */
+.navbar-nav .nav-link {
+  color: var(--dark);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
 }
-.popup-box{
-    background:#fff;
-    padding:30px;
-    border-radius:20px;
-    width:90%;
-    max-width:420px;
+
+.navbar-nav .nav-link:hover {
+  color: var(--accent);
 }
-input{
-    width:100%;
-    padding:12px;
-    margin:10px 0;
-    border-radius:12px;
-    border:1px solid #ccc;
+
+/* Ensure Apply button on the far right */
+.desktop-apply {
+  display: inline-block;
+  background: linear-gradient(135deg, #f85a1b, #fda93f);
 }
-.primary-btn{
-    width:100%;
-    background:#ff7a00;
-    color:#fff;
-    padding:14px;
-    border-radius:14px;
+
+.mobile-apply {
+  display: none;
+  background: linear-gradient(135deg, #f85a1b, #fda93f);
+  border-radius:50px;
 }
-.question{margin-bottom:24px}
-.option{
-    background:#f2f3f7;
-    padding:12px;
-    border-radius:12px;
-    margin:8px 0;
-    display:block;
+
+/* Hamburger only on mobile */
+.hamburger {
+  display: none;
 }
-.correct{color:green;font-weight:600}
-.wrong{color:red;font-weight:600}
-.hidden{display:none}
-.center{text-align:center}
-</style>
+
+/* === Responsive === */
+@media (max-width: 991.98px) {
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+  }
+
+  .navbar-menu {
+    display: none;
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .navbar-menu.active {
+    display: block;
+  }
+
+  .navbar-nav {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .desktop-apply {
+    display: none;
+    background: linear-gradient(135deg, #f85a1b, #fda93f);
+  }
+
+  .mobile-apply {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .mobile-apply .btn-apply {
+    width: 100%;
+    text-align: center;
+    background: linear-gradient(135deg, #f85a1b, #fda93f);
+    border-radius:50px;
+  }
+}
+
+/* Wrapper Styles */
+.navbar-wrapper {
+  background-color: var(--white);
+  border-radius: 50px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 12px 24px;
+  margin: 20px;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+/* Brand */
+.navbar-brand {
+  font-weight: 700;
+  color: var(--primary);
+  font-size: 1.5rem;
+  text-decoration: none;
+}
+
+/* Nav Menu */
+.navbar-menu {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-nav {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-nav li {
+  margin-left: 20px;
+}
+
+.navbar-nav .nav-link {
+  font-weight: 500;
+  color: var(--dark);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.navbar-nav .nav-link:hover {
+  color: var(--accent);
+}
+
+/* Buttons */
+.btn-apply {
+  color: var(--white);
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.3s ease-in-out;
+  background: linear-gradient(135deg, #f85a1b, #fda93f);
+}
+
+.btn-apply:hover {
+  background-color: #e39d00;
+  color: #fff;
+}
+
+/* Hamburger Styles */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 5px;
+}
+
+.hamburger span {
+  width: 25px;
+  height: 3px;
+  background: var(--primary);
+  transition: 0.3s;
+  border-radius: 2px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 991.98px) {
+  .hamburger {
+    display: flex;
+  }
+
+  .navbar-menu {
+    display: none;
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .navbar-menu.active {
+    display: block;
+  }
+
+  .navbar-nav {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .navbar-nav li {
+    margin: 0;
+    width: 100%;
+  }
+
+  .navbar-nav .nav-link {
+    display: block;
+    width: 100%;
+    padding: 8px 0;
+  }
+
+  .desktop-apply {
+    display: none;
+  }
+
+  .mobile-apply {
+    display: block;
+    width: 100%;
+  }
+
+  .mobile-apply .btn-apply {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (min-width: 992px) {
+  .mobile-apply {
+    display: none;
+  }
+}
+
+    
+ /* Footer Styling */
+.custom-footer {
+ background: linear-gradient(135deg, #f85a1b, #fda93f);
+  color: #f1f1f1;
+  font-size: 0.95rem;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  box-shadow: 0 -2px 25px rgba(0, 0, 0, 0.2);
+  margin-top:auto
+}
+
+.custom-footer h5,
+.custom-footer h6 {
+  color: #fff;
+}
+
+.footer-links li {
+  margin-bottom: 10px;
+}
+
+.footer-links a {
+  color: #fefefe;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: #eee;
+  text-decoration: underline;
+}
+
+.footer-icon {
+  color: #ffffff;
+  transition: all 0.3s ease;
+}
+
+.footer-icon:hover {
+  color: #171717;
+  transform: scale(1.1);
+  
+}
+
+@media (max-width: 768px) {
+  .custom-footer .row > div:last-child {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .custom-footer .d-flex.gap-3.fs-5 {
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+  
+  .custom-footer {
+    text-align: center;
+  }
+
+  .custom-footer .row > div {
+    padding-bottom: 1rem;
+  }
+
+  .footer-icon {
+    font-size: 1.3rem;
+  }
+}
+    
+    /*Notification Slider Top*/
+    .jyp-notification-slider {
+    width: 100%;
+    background-color: #fff8f8;
+    border-bottom: 2px solid linear-gradient(135deg, #f85a1b, #fda93f);
+    overflow: hidden;
+    z-index: 999;
+    position: relative;
+  }
+
+  .jyp-notification-track {
+    display: flex;
+    white-space: nowrap;
+    animation: jyp-scroll-left 30s linear infinite;
+  }
+
+  .jyp-notification-item {
+    flex: 0 0 auto;
+    padding: 12px 40px;
+    color: #222;
+    font-size: 16px;
+    border-right: 1px solid #e1e1e1;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  .jyp-notification-item:hover {
+    background: linear-gradient(135deg, #f85a1b, #fda93f);
+    color: #fff;
+  }
+
+  @keyframes jyp-scroll-left {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+  }
+
+  @media (max-width: 768px) {
+    .jyp-notification-item {
+      font-size: 14px;
+      padding: 10px 25px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .jyp-notification-item {
+      font-size: 13px;
+      padding: 8px 18px;
+    }
+  }
+
+    
+/* Overlay */
+.jyp-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(59, 60, 61, 0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* Modal Content Box */
+.jyp-popup-content {
+  background-color: var(--white);
+  max-width: 420px;
+  width: 90%;
+  padding: 40px 30px 35px;
+  border-radius: 14px;
+  position: relative;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+  border-top: 6px solid var(--highlight);
+  animation: fadeInScale 0.4s ease;
+}
+
+/* Inner Content */
+.jyp-popup-inner {
+  text-align: center;
+}
+
+.jyp-popup-title {
+  font-size: 24px;
+  color: var(--primary);
+  font-weight: 600;
+  margin-bottom: 16px;
+  line-height: 1.3;
+}
+
+.jyp-popup-text {
+  font-size: 15.5px;
+  color: #444;
+  margin-bottom: 25px;
+  line-height: 1.6;
+}
+
+.jyp-popup-btn {
+  display: inline-block;
+  background-color: var(--highlight);
+  color: var(--white);
+  padding: 11px 26px;
+  font-size: 15px;
+  border-radius: 30px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.jyp-popup-btn:hover {
+  background-color: var(--accent);
+}
+
+/* Close Button */
+.jyp-popup-close {
+  position: absolute;
+  top: 12px;
+  right: 18px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--primary);
+  cursor: pointer;
+  line-height: 1;
+}
+
+/* Animation */
+@keyframes fadeInScale {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .jyp-popup-content {
+    padding: 30px 20px 25px;
+  }
+
+  .jyp-popup-title {
+    font-size: 20px;
+  }
+
+  .jyp-popup-text {
+    font-size: 14.5px;
+  }
+
+  .jyp-popup-btn {
+    font-size: 14px;
+    padding: 10px 22px;
+  }
+}
+
+    /* === Program Flow Section: side image layout === */
+#program-flow-section .program-flow-layout {
+  display: grid;
+  grid-template-columns: 1fr minmax(240px, 420px);
+  gap: 24px;
+  align-items: start;
+}
+
+/* Image container */
+#program-flow-section .timeline-side-image {
+  display: block;
+}
+
+#program-flow-section .timeline-side-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 16px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+  object-fit: cover;
+  aspect-ratio: 9 / 16;
+}
+
+/* Responsive: stack on tablets & phones */
+@media (max-width: 991.98px) {
+  #program-flow-section .program-flow-layout {
+    grid-template-columns: 1fr;
+  }
+  #program-flow-section .timeline-side-image {
+    margin-top: 16px;
+  }
+}
+
+/* On very small phones */
+@media (max-width: 420px) {
+  #program-flow-section .timeline-side-image img {
+    aspect-ratio: auto;
+  }
+}
+
+
+
+
+    /* Scoped styles only for JYP 2025 section */
+.jyp2025-section {
+  background: #f7f7fb;
+  padding: clamp(20px, 4vw, 48px) 16px;
+}
+
+.jyp2025-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.jyp2025-card {
+  background: #fff;
+  border-radius: 22px;
+  box-shadow: 0 10px 30px rgba(18, 38, 63, 0.08);
+  padding: clamp(18px, 3.2vw, 36px);
+}
+
+.jyp2025-head h2 {
+  font-size: 22px;
+  line-height: 1.15;
+  margin: 0 0 6px 0;
+  color: #2d2f31;
+  letter-spacing: -0.02em;
+}
+
+.jyp2025-sub {
+  margin: 0 0 18px 0;
+  font-size: clamp(14px, 1.6vw, 16px);
+  color: #6f7782;
+}
+
+.jyp2025-list {
+  list-style: none;
+  counter-reset: jyp2025-counter;
+  display: grid;
+  gap: 14px;
+  padding: 0;
+  margin: 0;
+}
+
+.jyp2025-list li {
+  counter-increment: jyp2025-counter;
+  background: #fff;
+  border: 1px solid #f1f2f6;
+  padding: 14px 14px 14px 58px;
+  border-radius: 16px;
+  color: #2d2f31;
+  line-height: 1.55;
+  position: relative;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+
+.jyp2025-list li::before {
+  content: counter(jyp2025-counter);
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  color: #fff;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #ff8a00, #ff5a00);
+  box-shadow: 0 6px 18px rgba(255, 125, 46, 0.25);
+}
+
+.jyp2025-list li:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(18, 38, 63, 0.10);
+  border-color: #f0efe9;
+}
+
+.jyp2025-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.jyp2025-btn,
+.jyp2025-btn-outline {
+  font-weight: 600;
+  border-radius: 14px;
+  padding: 12px 18px;
+  text-decoration: none;
+  display: inline-block;
+  line-height: 1;
+  transition: transform .18s ease, box-shadow .18s ease, background .18s ease, color .18s ease, border-color .18s ease;
+}
+
+.jyp2025-btn {
+  color: #fff;
+  background: linear-gradient(135deg, #ff8a00, #ff5a00);
+  box-shadow: 0 10px 20px rgba(255, 125, 46, 0.25);
+}
+.jyp2025-btn:hover { transform: translateY(-1px); }
+
+.jyp2025-btn-outline {
+  color: #2d2f31;
+  background: #fff;
+  border: 1.5px solid #dfe3e8;
+}
+.jyp2025-btn-outline:hover { border-color: #cfd6dd; }
+
+/* Responsive tweaks */
+@media (min-width: 768px) {
+  .jyp2025-list { gap: 16px; }
+  .jyp2025-list li { padding: 16px 18px 16px 62px; }
+  .jyp2025-list li::before { width: 36px; height: 36px; border-radius: 12px; }
+}
+
+@media (min-width: 1024px) {
+  .jyp2025-card { padding: 40px; }
+}
+
+
+
+    /* Hide all Google UI + prevent top gap */
+  .goog-te-banner-frame.skiptranslate, #goog-gt-tt, .goog-te-balloon-frame { display:none !important; }
+  body { top:0 !important; }
+  .goog-te-gadget { height:0 !important; overflow:hidden !important; }
+  .goog-text-highlight { background:none !important; box-shadow:none !important; }
+
+  /* Sticky control */
+  #gt-sticky{ position:fixed; right:0; top:50%; transform:translateY(-50%); z-index:99999; }
+  #gt-sticky button{
+    display:block; margin:6px 0; padding:10px 14px; border:0; cursor:pointer;
+    border-radius:12px 0 0 12px; font-weight:700; color:#fff; background:#111;
+    box-shadow:0 8px 20px rgba(0,0,0,.18);
+  }
+  #gt-sticky #gt-en{ background:#2b2b2b; }
+  @media (max-width:600px){ #gt-sticky button{ padding:8px 10px; } }
+  
+      
+        
+        .week-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .week-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+        
+        .week-header {
+            display: ;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .week-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #3b3c3d;
+        }
+        
+        .week-date {
+            color: #e46428;
+            font-weight: 500;
+        }
+        
+        .quiz-list {
+            display: none;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #f5f6fa;
+        }
+        
+        .quiz-list.active {
+            display: block;
+        }
+        
+        .quiz-item {
+            background: #f5f6fa;
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+        }
+        
+        .quiz-button {
+            background: linear-gradient(135deg, #e46428 0%, #f9b900 100%);
+            color: #ffffff;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .quiz-button:hover {
+            transform: scale(1.05);
+        }
+        
+        .see-answers-btn {
+            background: linear-gradient(135deg, #3b3c3d 0%, #5a5b5c 100%);
+            color: #ffffff;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 10px;
+            display: none;
+        }
+        
+        .see-answers-btn.visible {
+            display: inline-block;
+        }
+        
+        .answers-section {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background: #ffffff;
+            border-radius: 12px;
+        }
+        
+        .answers-section.visible {
+            display: block;
+        }
+        
+        .answer-item {
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            background: #f5f6fa;
+        }
+        
+        .answer-question {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #3b3c3d;
+        }
+        
+        .answer-detail {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+        
+        .correct-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+        
+        .correct-badge.correct {
+            background: #4caf50;
+            color: #ffffff;
+        }
+        
+        .correct-badge.wrong {
+            background: #f44336;
+            color: #ffffff;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        
+        .modal.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .modal-content {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .modal-header h2 {
+            color: #3b3c3d;
+            font-size: 28px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #3b3c3d;
+            font-weight: 600;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #f5f6fa;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #f9b900;
+        }
+        
+        .question-block {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f5f6fa;
+            border-radius: 12px;
+        }
+        
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #3b3c3d;
+            font-size: 18px;
+        }
+        
+        .option-label {
+            display: block;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background: #ffffff;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .option-label:hover {
+            border-color: #f9b900;
+            transform: translateX(5px);
+        }
+        
+        .option-label input[type="radio"] {
+            margin-right: 10px;
+        }
+        
+        .submit-btn, .start-quiz-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #e46428 0%, #f9b900 100%);
+            color: #ffffff;
+            border: none;
+            padding: 15px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: transform 0.3s;
+        }
+        
+        .submit-btn:hover, .start-quiz-btn:hover {
+            transform: scale(1.02);
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 30px;
+            cursor: pointer;
+            color: #3b3c3d;
+        }
+        
+      
+        
+        @media (max-width: 768px) {
+            
+            .modal-content {
+                padding: 25px;
+            }
+        }
+
+    </style>
 </head>
-
 <body>
+   <div class="page-wrapper">
+    <!-- NAVIGATION BAR -->
+<div class="navbar-wrapper">
+  <div class="container nav-container">
+    <a class="navbar-brand" href="#">
+  <img src="https://i.ibb.co/G3GR0sCK/image-8.png" alt="JYP Logo" style="height: 90px;">
+</a>
 
-<div class="container">
 
-<!-- WEEK SELECTION -->
-<div class="card" id="weekSection">
-    <h2>Select Week</h2>
-    <div id="weeks"></div>
-</div>
-
-<!-- QUIZ LIST -->
-<div class="card hidden" id="quizSection">
-    <h2 id="weekTitle"></h2>
-    <div id="quizList"></div>
-</div>
-
-<!-- QUIZ -->
-<div class="card hidden" id="quizBox">
-    <h2 id="quizTitle"></h2>
-    <form id="quizForm"></form>
-    <button type="button" class="primary-btn" onclick="submitQuiz()">Submit Quiz</button>
-</div>
-
-<!-- THANK YOU -->
-<div class="card hidden center" id="thankYou">
-    <h2>Thank You!</h2>
-    <p>Your responses have been recorded successfully.</p>
-</div>
-
-</div>
-
-<!-- USER DETAILS POPUP -->
-<div class="popup" id="popup">
-    <div class="popup-box">
-        <h3>Enter Details</h3>
-        <input type="text" id="name" placeholder="Your Name">
-        <input type="email" id="email" placeholder="Email">
-        <input type="tel" id="phone" placeholder="Phone">
-        <button class="primary-btn" onclick="startQuiz()">Start Quiz</button>
+    <!-- Hamburger Icon -->
+    <div class="hamburger" id="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
     </div>
+
+    <!-- Nav Links -->
+    <nav class="navbar-menu" id="navbarMenu">
+      <ul class="navbar-nav">
+        <li><a class="nav-link" href="#about">About</a></li>
+        <li><a class="nav-link" href="#how">How to Apply</a></li>
+        <li><a class="nav-link" href="#program">Program</a></li>
+        <li><a class="nav-link" href="#eligibility">Eligibility</a></li>
+        <li><a class="nav-link" href="#blogs">Notification</a></li>
+        <li><a class="nav-link" href="#apply">FAQs</a></li>
+        <li class="mobile-apply">
+          <a href="https://brandmingoacademy24.github.io/form/" class="btn btn-apply">Apply Now</a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Desktop Apply Button -->
+    <a href="https://brandmingoacademy24.github.io/form/" class="btn btn-apply desktop-apply">Apply Now</a>
+  </div>
 </div>
 
-<script>
-/* ---------------- DATA ---------------- */
-const data = {
-  "Week 1": [{
-    id:1,
-    title:"Indian Constitution Basics",
-    questions:[
-      { q:"Who is the head of the Indian State?", options:["President","Prime Minister","Governor","Chief Justice"], correct:"President" },
-      { q:"How many Fundamental Rights are there?", options:["5","6","7","8"], correct:"6" },
-      { q:"What is the supreme law of India?", options:["Parliament","Judiciary","Constitution","Cabinet"], correct:"Constitution" },
-      { q:"Who appoints the Prime Minister?", options:["President","Parliament","Supreme Court","People"], correct:"President" },
-      { q:"Which body interprets the Constitution?", options:["Parliament","Supreme Court","Cabinet","Election Commission"], correct:"Supreme Court" },
-      { q:"Rajya Sabha is also called?", options:["Lower House","Upper House","People’s House","Council"], correct:"Upper House" },
-      { q:"Maximum members in Lok Sabha?", options:["500","520","545","600"], correct:"545" },
-      { q:"Who is the guardian of the Constitution?", options:["President","Prime Minister","Supreme Court","Parliament"], correct:"Supreme Court" }
-    ]
-  }]
-};
+ <!-- JYP Notification Slider -->
+<div class="jyp-notification-slider">
+  <div class="jyp-notification-track" id="jypNotificationTrack">
+    
+    <!-- Notification Links (Dummy - Replace href via backend) -->
+    <a href="https://youthparliament.in/register" class="jyp-notification-item" target="_blank">
+      📢 Registrations for Jagran Youth Parliament 2025 are now open!
+    </a>
+    
+    <a href="https://youthparliament.in/event-details" class="jyp-notification-item" target="_blank">
+      ⌛ Last day of the registration is 31<sup>st</sup> August 2025.
+    </a>
 
-let currentQuiz = null;
+    <a href="https://youthparliament.in/speakers" class="jyp-notification-item" target="_blank">
+      🤵 Debate will start from 10<sup>th</sup> September 2025.
+    </a>
 
-/* ---------------- LOAD WEEKS ---------------- */
-const weeksDiv = document.getElementById("weeks");
-Object.keys(data).forEach(week=>{
-  const btn=document.createElement("button");
-  btn.className="week-btn";
-  btn.innerText=week;
-  btn.onclick=()=>showQuizzes(week);
-  weeksDiv.appendChild(btn);
-});
+    <a href="https://youthparliament.in/schedule" class="jyp-notification-item" target="_blank">
+      📄 Jagran Youth Parliament will conducted on January 2026.
+    </a>
 
-function showQuizzes(week){
-  document.getElementById("quizSection").classList.remove("hidden");
-  document.getElementById("weekTitle").innerText=week;
-  const list=document.getElementById("quizList");
-  list.innerHTML="";
-  data[week].forEach(q=>{
-    const btn=document.createElement("button");
-    btn.className="quiz-btn";
-    btn.innerText=q.title;
-    btn.onclick=()=>openPopup(q);
-    list.appendChild(btn);
+    <a href="https://youthparliament.in/live" class="jyp-notification-item" target="_blank">
+      🏆 All the winners will be shared at universities/college level!
+    </a>
+
+  </div>
+</div>
+
+    <div class="container" style="padding-top:70px;">
+<!--         <h1>Weekly Quiz Portal</h1> -->
+        <div id="weeksContainer"></div>
+    </div>
+
+    <div id="quizModal" class="modal">
+        <div class="modal-content">
+            <div id="userFormSection">
+                <div class="modal-header">
+                    <h2 id="modalTitle">Enter Your Details</h2>
+                </div>
+                <div class="form-group">
+                    <label for="userName">Name *</label>
+                    <input type="text" id="userName" required>
+                </div>
+                <div class="form-group">
+                    <label for="userEmail">Email *</label>
+                    <input type="email" id="userEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="userPhone">Phone *</label>
+                    <input type="tel" id="userPhone" required>
+                </div>
+                <button class="start-quiz-btn" onclick="startQuiz()">Start Quiz</button>
+            </div>
+            
+            <div id="quizQuestionsSection" style="display: none;">
+                <div class="modal-header">
+                    <h2>Quiz Questions</h2>
+                </div>
+                <div id="questionsContainer"></div>
+                <button class="submit-btn" onclick="submitQuiz()">Submit Quiz</button>
+            </div>
+        </div>
+    </div>
+
+ <!-- FOOTER -->
+<footer class="custom-footer py-5 text-white">
+  <div class="container">
+    <div class="row gy-4">
+      <!-- Brand Info -->
+      <div class="col-md-4">
+        <h5 class="fw-bold mb-3">Jagran Youth Parliament</h5>
+        <p class="text-light">Empowering the voice of youth for a brighter democratic India.</p>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="col-md-4">
+        <h6 class="fw-semibold mb-3">Quick Links</h6>
+        <ul class="list-unstyled footer-links">
+          <li><a href="#">Home</a></li>
+          <li><a href="#blogs">Notification</a></li>
+<!--           <li><a href="#winners">Winners</a></li>
+          <li><a href="#">Terms & Conditions</a></li>
+          <li><a href="#">Privacy Policy</a></li> -->
+        </ul>
+      </div>
+
+      <!-- Support and Socials -->
+    <div class="col-md-4">
+  <h6 class="fw-semibold mb-3">Support</h6>
+  <p class="mb-1"><i class="fa-solid fa-envelope me-2"></i> Contact@jagranyuvasanaad.com</p>
+<!--   <p class="mb-3"><i class="fa-brands fa-whatsapp me-2"></i> +91 99999 88888</p> -->
+  <div class="d-flex gap-3 fs-5">
+    <a href="#" class="footer-icon"><i class="fa-brands fa-facebook-f"></i></a>
+    <a href="#" class="footer-icon"><i class="fa-brands fa-instagram"></i></a>
+    <a href="#" class="footer-icon"><i class="fa-brands fa-youtube"></i></a>
+    <a href="#" class="footer-icon"><i class="fa-brands fa-linkedin-in"></i></a>
+  </div>
+</div>
+
+  </div>
+</footer>
+ </div>
+
+
+    <script>
+        const hamburger = document.getElementById("hamburger");
+  const navbarMenu = document.getElementById("navbarMenu");
+
+  hamburger.addEventListener("click", () => {
+    navbarMenu.classList.toggle("active");
   });
-}
+  
+        const weeks = [
+            {
+                weekId: 1,
+                label: "Week 1",
+                date: "12-12-2025",
+                quizzes: [
+                    {
+                        quizId: 1,
+                        title: "Quiz 1",
+                        date: "12-12-2025",
+                        questions: [
+                            {
+                                question: "Who is the President of India?",
+                                options: ["Narendra Modi", "Droupadi Murmu", "Amit Shah", "Rajnath Singh"],
+                                correctIndex: 1
+                            },
+                            {
+                                question: "What is the capital of India?",
+                                options: ["Mumbai", "Kolkata", "New Delhi", "Chennai"],
+                                correctIndex: 2
+                            },
+                            {
+                                question: "In which year did India gain independence?",
+                                options: ["1945", "1947", "1950", "1952"],
+                                correctIndex: 1
+                            },
+                            {
+                                question: "Who is known as the Father of the Nation in India?",
+                                options: ["Jawaharlal Nehru", "Mahatma Gandhi", "Subhas Chandra Bose", "Bhagat Singh"],
+                                correctIndex: 1
+                            },
+                            {
+                                question: "What is the national animal of India?",
+                                options: ["Lion", "Elephant", "Tiger", "Peacock"],
+                                correctIndex: 2
+                            },
+                            {
+                                question: "How many states are there in India?",
+                                options: ["28", "29", "27", "30"],
+                                correctIndex: 0
+                            }
+                        ]
+                    },
+                    {
+                        quizId: 2,
+                        title: "Quiz 2",
+                        date: "14-12-2025",
+                        questions: [
+                            {
+                                question: "What is the currency of India?",
+                                options: ["Dollar", "Rupee", "Pound", "Euro"],
+                                correctIndex: 1
+                            },
+                            {
+                                question: "Which river is known as the Ganga of the South?",
+                                options: ["Godavari", "Krishna", "Kaveri", "Narmada"],
+                                correctIndex: 0
+                            },
+                            {
+                                question: "Who wrote the Indian National Anthem?",
+                                options: ["Rabindranath Tagore", "Bankim Chandra Chatterjee", "Sarojini Naidu", "Subramanya Bharathi"],
+                                correctIndex: 0
+                            },
+                            {
+                                question: "What is the national flower of India?",
+                                options: ["Rose", "Lotus", "Sunflower", "Jasmine"],
+                                correctIndex: 1
+                            },
+                            {
+                                question: "Which is the longest river in India?",
+                                options: ["Yamuna", "Brahmaputra", "Ganga", "Godavari"],
+                                correctIndex: 2
+                            },
+                            {
+                                question: "In which city is the Gateway of India located?",
+                                options: ["Delhi", "Mumbai", "Kolkata", "Chennai"],
+                                correctIndex: 1
+                            },
+                            {
+                                question: "Who was the first Prime Minister of India?",
+                                options: ["Mahatma Gandhi", "Sardar Patel", "Jawaharlal Nehru", "Rajendra Prasad"],
+                                correctIndex: 2
+                            },
+                            {
+                                question: "What is the national sport of India?",
+                                options: ["Cricket", "Hockey", "Football", "Kabaddi"],
+                                correctIndex: 1
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                weekId: 2,
+                label: "Week 2",
+                date: "19-12-2025",
+                quizzes: [
+                    {
+                        quizId: 3,
+                        title: "Quiz 1",
+                        date: "19-12-2025",
+                        questions: [
+                            {
+                                question: "What is the full form of GDP?",
+                                options: ["Gross Domestic Product", "General Development Plan", "Government Development Policy", "Growth and Development Program"],
+                                correctIndex: 0
+                            },
+                            {
+                                question: "Who is the current Chief Justice of India?",
+                                options: ["NV Ramana", "DY Chandrachud", "SA Bobde", "Ranjan Gogoi"],
+                                correctIndex: 1
+                            },
+                            {
+                                question: "Which Indian state has the highest literacy rate?",
+                                options: ["Tamil Nadu", "Maharashtra", "Kerala", "Karnataka"],
+                                correctIndex: 2
+                            },
+                            {
+                                question: "What is the national bird of India?",
+                                options: ["Peacock", "Eagle", "Sparrow", "Parrot"],
+                                correctIndex: 0
+                            },
+                            {
+                                question: "In which year was the Constitution of India adopted?",
+                                options: ["1947", "1948", "1949", "1950"],
+                                correctIndex: 2
+                            },
+                            {
+                                question: "Who is known as the Missile Man of India?",
+                                options: ["Vikram Sarabhai", "APJ Abdul Kalam", "Homi Bhabha", "CV Raman"],
+                                correctIndex: 1
+                            }
+                        ]
+                    }
+                ]
+            }
+        ];
 
-/* ---------------- FLOW ---------------- */
-function openPopup(quiz){
-  currentQuiz=quiz;
-  document.getElementById("popup").style.display="flex";
-}
+        let quizAttempts = {};
+        let currentQuiz = null;
+        let userDetails = {};
 
-function startQuiz(){
-  if(!name.value || !email.value || !phone.value){
-    alert("Please fill all details");
-    return;
-  }
-  document.getElementById("popup").style.display="none";
-  loadQuiz();
-}
+        function init() {
+            const container = document.getElementById('weeksContainer');
+            weeks.forEach(week => {
+                const weekCard = document.createElement('div');
+                weekCard.className = 'week-card';
+                weekCard.innerHTML = `
+                    <div class="week-header">
+                        <div>
+                            <div class="week-title">${week.label}</div>
+                            <div class="week-date">${week.date}</div>
+                        </div>
+                    </div>
+                    <div class="quiz-list" id="quizList-${week.weekId}">
+                        ${week.quizzes.map(quiz => `
+                            <div class="quiz-item" id="quizItem-${quiz.quizId}">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                    <strong>${quiz.title}</strong>
+                                    <span style="color: #e46428;">${quiz.date}</span>
+                                </div>
+                                <button class="quiz-button" onclick="openQuizModal(${week.weekId}, ${quiz.quizId})">Take Quiz</button>
+                                <button class="see-answers-btn" id="seeAnswers-${quiz.quizId}" onclick="toggleAnswers(${quiz.quizId})">See Quiz Answers</button>
+                                <div class="answers-section" id="answers-${quiz.quizId}"></div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                
+                weekCard.querySelector('.week-header').addEventListener('click', function() {
+                    const quizList = document.getElementById(`quizList-${week.weekId}`);
+                    quizList.classList.toggle('active');
+                });
+                
+                container.appendChild(weekCard);
+            });
+        }
 
-function loadQuiz(){
-  document.getElementById("quizBox").classList.remove("hidden");
-  document.getElementById("quizTitle").innerText=currentQuiz.title;
-  const form=document.getElementById("quizForm");
-  form.innerHTML="";
-  currentQuiz.questions.forEach((q,i)=>{
-    let html=`<div class="question"><p><strong>${i+1}. ${q.q}</strong></p>`;
-    q.options.forEach(opt=>{
-      html+=`
-        <label class="option">
-          <input type="radio" name="q${i}" value="${opt}" required> ${opt}
-        </label>`;
-    });
-    html+=`</div>`;
-    form.innerHTML+=html;
-  });
-}
+        function openQuizModal(weekId, quizId) {
+            const week = weeks.find(w => w.weekId === weekId);
+            const quiz = week.quizzes.find(q => q.quizId === quizId);
+            currentQuiz = quiz;
+            
+            document.getElementById('modalTitle').textContent = quiz.title;
+            document.getElementById('userName').value = '';
+            document.getElementById('userEmail').value = '';
+            document.getElementById('userPhone').value = '';
+            
+            document.getElementById('userFormSection').style.display = 'block';
+            document.getElementById('quizQuestionsSection').style.display = 'none';
+            
+            document.getElementById('quizModal').classList.add('active');
+        }
 
-function submitQuiz(){
-  if(!quizForm.checkValidity()){
-    alert("Please answer all questions");
-    return;
-  }
+        function startQuiz() {
+            const name = document.getElementById('userName').value.trim();
+            const email = document.getElementById('userEmail').value.trim();
+            const phone = document.getElementById('userPhone').value.trim();
+            
+            if (!name || !email || !phone) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            userDetails = { name, email, phone };
+            
+            document.getElementById('userFormSection').style.display = 'none';
+            document.getElementById('quizQuestionsSection').style.display = 'block';
+            
+            const questionsContainer = document.getElementById('questionsContainer');
+            questionsContainer.innerHTML = '';
+            
+            currentQuiz.questions.forEach((q, index) => {
+                const questionBlock = document.createElement('div');
+                questionBlock.className = 'question-block';
+                questionBlock.innerHTML = `
+                    <div class="question-text">Q${index + 1}. ${q.question}</div>
+                    ${q.options.map((opt, optIndex) => `
+                        <label class="option-label">
+                            <input type="radio" name="question-${index}" value="${optIndex}">
+                            ${opt}
+                        </label>
+                    `).join('')}
+                `;
+                questionsContainer.appendChild(questionBlock);
+            });
+        }
 
-  let score=0;
-  let resultHTML=`<h2>Quiz Result</h2>`;
+        function submitQuiz() {
+            const answers = [];
+            currentQuiz.questions.forEach((q, index) => {
+                const selected = document.querySelector(`input[name="question-${index}"]:checked`);
+                answers.push(selected ? parseInt(selected.value) : -1);
+            });
+            
+            quizAttempts[currentQuiz.quizId] = {
+                userAnswers: answers,
+                correctAnswers: currentQuiz.questions.map(q => q.correctIndex),
+                questions: currentQuiz.questions
+            };
+            
+            document.getElementById('quizModal').classList.remove('active');
+            
+            const seeAnswersBtn = document.getElementById(`seeAnswers-${currentQuiz.quizId}`);
+            seeAnswersBtn.classList.add('visible');
+        }
 
-  currentQuiz.questions.forEach((q,i)=>{
-    const selected=document.querySelector(`input[name="q${i}"]:checked`).value;
-    const correct=q.correct;
-    const isCorrect=selected===correct;
-    if(isCorrect) score++;
+        function toggleAnswers(quizId) {
+            const answersSection = document.getElementById(`answers-${quizId}`);
+            
+            if (answersSection.classList.contains('visible')) {
+                answersSection.classList.remove('visible');
+                return;
+            }
+            
+            const attempt = quizAttempts[quizId];
+            answersSection.innerHTML = '';
+            
+            attempt.questions.forEach((q, index) => {
+                const userAnswer = attempt.userAnswers[index];
+                const correctAnswer = attempt.correctAnswers[index];
+                const isCorrect = userAnswer === correctAnswer;
+                
+                const answerItem = document.createElement('div');
+                answerItem.className = 'answer-item';
+                answerItem.innerHTML = `
+                    <div class="answer-question">Q${index + 1}. ${q.question}</div>
+                    <div class="answer-detail"><strong>Your Answer:</strong> ${userAnswer >= 0 ? q.options[userAnswer] : 'Not answered'}</div>
+                    <div class="answer-detail"><strong>Correct Answer:</strong> ${q.options[correctAnswer]}</div>
+                    <div class="correct-badge ${isCorrect ? 'correct' : 'wrong'}">
+                        ${isCorrect ? '✅ Correct' : '❌ Wrong'}
+                    </div>
+                `;
+                answersSection.appendChild(answerItem);
+            });
+            
+            answersSection.classList.add('visible');
+        }
 
-    resultHTML+=`
-      <div class="question">
-        <p><strong>${q.q}</strong></p>
-        <p>Your Answer: <span class="${isCorrect?'correct':'wrong'}">${selected}</span></p>
-        ${!isCorrect?`<p>Correct Answer: <strong>${correct}</strong></p>`:""}
-      </div>`;
-  });
+        document.getElementById('quizModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('active');
+            }
+        });
 
-  quizBox.innerHTML=resultHTML+`<p><strong>Score: ${score}/${currentQuiz.questions.length}</strong></p>`;
-}
-</script>
-
+        init();
+    </script>
 </body>
 </html>
