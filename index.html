@@ -24,10 +24,7 @@ body{
     box-shadow:0 12px 30px rgba(0,0,0,0.08);
 }
 h2,h3{margin-top:0;color:#222}
-button{
-    border:none;
-    cursor:pointer;
-}
+button{border:none;cursor:pointer}
 .week-btn{
     background:#ff7a00;
     color:#fff;
@@ -73,22 +70,18 @@ input{
     padding:14px;
     border-radius:14px;
 }
-.question{
-    margin-bottom:24px;
-}
+.question{margin-bottom:24px}
 .option{
     background:#f2f3f7;
     padding:12px;
     border-radius:12px;
     margin:8px 0;
+    display:block;
 }
-.option input{
-    margin-right:8px;
-}
-.center{
-    text-align:center;
-}
+.correct{color:green;font-weight:600}
+.wrong{color:red;font-weight:600}
 .hidden{display:none}
+.center{text-align:center}
 </style>
 </head>
 
@@ -108,11 +101,11 @@ input{
     <div id="quizList"></div>
 </div>
 
-<!-- QUIZ QUESTIONS -->
+<!-- QUIZ -->
 <div class="card hidden" id="quizBox">
     <h2 id="quizTitle"></h2>
     <form id="quizForm"></form>
-    <button class="primary-btn" onclick="submitQuiz()">Submit Quiz</button>
+    <button type="button" class="primary-btn" onclick="submitQuiz()">Submit Quiz</button>
 </div>
 
 <!-- THANK YOU -->
@@ -127,115 +120,115 @@ input{
 <div class="popup" id="popup">
     <div class="popup-box">
         <h3>Enter Details</h3>
-        <input type="text" id="name" placeholder="Your Name" required>
-        <input type="email" id="email" placeholder="Email" required>
-        <input type="tel" id="phone" placeholder="Phone" required>
+        <input type="text" id="name" placeholder="Your Name">
+        <input type="email" id="email" placeholder="Email">
+        <input type="tel" id="phone" placeholder="Phone">
         <button class="primary-btn" onclick="startQuiz()">Start Quiz</button>
     </div>
 </div>
 
 <script>
-// ---------------- BACKEND DATA (JS) ----------------
+/* ---------------- DATA ---------------- */
 const data = {
-    "Week 1": [
-        {
-            id:1,
-            title:"Indian Constitution Basics",
-            questions:[
-                {
-                    q:"Who is the head of the Indian State?",
-                    options:["President","Prime Minister","Governor","Chief Justice"]
-                },
-                {
-                    q:"How many Fundamental Rights are there?",
-                    options:["5","6","7","8"]
-                }
-            ]
-        }
-    ],
-    "Week 2": [
-        {
-            id:2,
-            title:"Parliamentary System",
-            questions:[
-                {
-                    q:"What is the lower house of Parliament?",
-                    options:["Rajya Sabha","Lok Sabha","Vidhan Sabha","Council"]
-                }
-            ]
-        }
+  "Week 1": [{
+    id:1,
+    title:"Indian Constitution Basics",
+    questions:[
+      { q:"Who is the head of the Indian State?", options:["President","Prime Minister","Governor","Chief Justice"], correct:"President" },
+      { q:"How many Fundamental Rights are there?", options:["5","6","7","8"], correct:"6" },
+      { q:"What is the supreme law of India?", options:["Parliament","Judiciary","Constitution","Cabinet"], correct:"Constitution" },
+      { q:"Who appoints the Prime Minister?", options:["President","Parliament","Supreme Court","People"], correct:"President" },
+      { q:"Which body interprets the Constitution?", options:["Parliament","Supreme Court","Cabinet","Election Commission"], correct:"Supreme Court" },
+      { q:"Rajya Sabha is also called?", options:["Lower House","Upper House","People’s House","Council"], correct:"Upper House" },
+      { q:"Maximum members in Lok Sabha?", options:["500","520","545","600"], correct:"545" },
+      { q:"Who is the guardian of the Constitution?", options:["President","Prime Minister","Supreme Court","Parliament"], correct:"Supreme Court" }
     ]
+  }]
 };
 
 let currentQuiz = null;
 
-// ---------------- WEEK LOAD ----------------
+/* ---------------- LOAD WEEKS ---------------- */
 const weeksDiv = document.getElementById("weeks");
 Object.keys(data).forEach(week=>{
-    const btn = document.createElement("button");
-    btn.className="week-btn";
-    btn.innerText=week;
-    btn.onclick=()=>showQuizzes(week);
-    weeksDiv.appendChild(btn);
+  const btn=document.createElement("button");
+  btn.className="week-btn";
+  btn.innerText=week;
+  btn.onclick=()=>showQuizzes(week);
+  weeksDiv.appendChild(btn);
 });
 
 function showQuizzes(week){
-    document.getElementById("quizSection").classList.remove("hidden");
-    document.getElementById("weekTitle").innerText = week;
-    const list = document.getElementById("quizList");
-    list.innerHTML="";
-    data[week].forEach(q=>{
-        const btn=document.createElement("button");
-        btn.className="quiz-btn";
-        btn.innerText=q.title;
-        btn.onclick=()=>openPopup(q);
-        list.appendChild(btn);
-    });
+  document.getElementById("quizSection").classList.remove("hidden");
+  document.getElementById("weekTitle").innerText=week;
+  const list=document.getElementById("quizList");
+  list.innerHTML="";
+  data[week].forEach(q=>{
+    const btn=document.createElement("button");
+    btn.className="quiz-btn";
+    btn.innerText=q.title;
+    btn.onclick=()=>openPopup(q);
+    list.appendChild(btn);
+  });
 }
 
-// ---------------- QUIZ FLOW ----------------
+/* ---------------- FLOW ---------------- */
 function openPopup(quiz){
-    currentQuiz = quiz;
-    document.getElementById("popup").style.display="flex";
+  currentQuiz=quiz;
+  document.getElementById("popup").style.display="flex";
 }
 
 function startQuiz(){
-    if(!name.value || !email.value || !phone.value){
-        alert("Please fill all details");
-        return;
-    }
-    document.getElementById("popup").style.display="none";
-    loadQuiz();
+  if(!name.value || !email.value || !phone.value){
+    alert("Please fill all details");
+    return;
+  }
+  document.getElementById("popup").style.display="none";
+  loadQuiz();
 }
 
 function loadQuiz(){
-    document.getElementById("quizBox").classList.remove("hidden");
-    document.getElementById("quizTitle").innerText = currentQuiz.title;
-    const form = document.getElementById("quizForm");
-    form.innerHTML="";
-    currentQuiz.questions.forEach((q,i)=>{
-        const div=document.createElement("div");
-        div.className="question";
-        div.innerHTML=`<p><strong>${q.q}</strong></p>`;
-        q.options.forEach(opt=>{
-            div.innerHTML+=`
-            <label class="option">
-                <input type="radio" name="q${i}" required> ${opt}
-            </label>`;
-        });
-        form.appendChild(div);
+  document.getElementById("quizBox").classList.remove("hidden");
+  document.getElementById("quizTitle").innerText=currentQuiz.title;
+  const form=document.getElementById("quizForm");
+  form.innerHTML="";
+  currentQuiz.questions.forEach((q,i)=>{
+    let html=`<div class="question"><p><strong>${i+1}. ${q.q}</strong></p>`;
+    q.options.forEach(opt=>{
+      html+=`
+        <label class="option">
+          <input type="radio" name="q${i}" value="${opt}" required> ${opt}
+        </label>`;
     });
+    html+=`</div>`;
+    form.innerHTML+=html;
+  });
 }
 
 function submitQuiz(){
-    if(!document.getElementById("quizForm").checkValidity()){
-        alert("Please answer all questions");
-        return;
-    }
-    document.getElementById("quizBox").classList.add("hidden");
-    document.getElementById("quizSection").classList.add("hidden");
-    document.getElementById("weekSection").classList.add("hidden");
-    document.getElementById("thankYou").classList.remove("hidden");
+  if(!quizForm.checkValidity()){
+    alert("Please answer all questions");
+    return;
+  }
+
+  let score=0;
+  let resultHTML=`<h2>Quiz Result</h2>`;
+
+  currentQuiz.questions.forEach((q,i)=>{
+    const selected=document.querySelector(`input[name="q${i}"]:checked`).value;
+    const correct=q.correct;
+    const isCorrect=selected===correct;
+    if(isCorrect) score++;
+
+    resultHTML+=`
+      <div class="question">
+        <p><strong>${q.q}</strong></p>
+        <p>Your Answer: <span class="${isCorrect?'correct':'wrong'}">${selected}</span></p>
+        ${!isCorrect?`<p>Correct Answer: <strong>${correct}</strong></p>`:""}
+      </div>`;
+  });
+
+  quizBox.innerHTML=resultHTML+`<p><strong>Score: ${score}/${currentQuiz.questions.length}</strong></p>`;
 }
 </script>
 
